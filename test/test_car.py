@@ -1,14 +1,15 @@
 import unittest
 from datetime import datetime
 
-from engine.model.calliope import Calliope
-from engine.model.glissade import Glissade
-from engine.model.palindrome import Palindrome
-from engine.model.rorschach import Rorschach
-from engine.model.thovex import Thovex
+from ..model.calliope import Calliope
+from ..model.glissade import Glissade
+from ..model.palindrome import Palindrome
+from ..model.rorschach import Rorschach
+from ..model.thovex import Thovex
 
 
 class TestCalliope(unittest.TestCase):
+    # Battery should be serviced if last service date is more than 2 years ago
     def test_battery_should_be_serviced(self):
         today = datetime.today().date()
         last_service_date = today.replace(year=today.year - 3)
@@ -18,6 +19,7 @@ class TestCalliope(unittest.TestCase):
         car = Calliope(last_service_date, current_mileage, last_service_mileage)
         self.assertTrue(car.needs_service())
 
+    # Battery should not be serviced if last service date is less than 2 years ago
     def test_battery_should_not_be_serviced(self):
         today = datetime.today().date()
         last_service_date = today.replace(year=today.year - 1)
@@ -27,6 +29,7 @@ class TestCalliope(unittest.TestCase):
         car = Calliope(last_service_date, current_mileage, last_service_mileage)
         self.assertFalse(car.needs_service())
 
+    # Engine should be serviced if current mileage is more than 30000
     def test_engine_should_be_serviced(self):
         last_service_date = datetime.today().date()
         current_mileage = 30001
@@ -35,6 +38,7 @@ class TestCalliope(unittest.TestCase):
         car = Calliope(last_service_date, current_mileage, last_service_mileage)
         self.assertTrue(car.needs_service())
 
+    # Engine should not be serviced if current mileage is less than or equal to 30000
     def test_engine_should_not_be_serviced(self):
         last_service_date = datetime.today().date()
         current_mileage = 30000
@@ -45,6 +49,7 @@ class TestCalliope(unittest.TestCase):
 
 
 class TestGlissade(unittest.TestCase):
+    # Battery should be serviced if last service date is more than 2 years ago
     def test_battery_should_be_serviced(self):
         today = datetime.today().date()
         last_service_date = today.replace(year=today.year - 3)
@@ -54,6 +59,7 @@ class TestGlissade(unittest.TestCase):
         car = Glissade(last_service_date, current_mileage, last_service_mileage)
         self.assertTrue(car.needs_service())
 
+    # Battery should not be serviced if last service date is less than 2 years ago
     def test_battery_should_not_be_serviced(self):
         today = datetime.today().date()
         last_service_date = today.replace(year=today.year - 1)
@@ -62,6 +68,18 @@ class TestGlissade(unittest.TestCase):
 
         car = Glissade(last_service_date, current_mileage, last_service_mileage)
         self.assertFalse(car.needs_service())
+
+    # Engine should be serviced if current mileage is more than 60000
+    def test_engine_should_be_serviced(self):
+        last_service_date = datetime.today().date()
+        current_mileage = 60001
+        last_service_mileage = 0
+
+        car = Glissade(last_service_date, current_mileage, last_service_mileage)
+        self.assertTrue(car.needs_service())
+
+   
+
 
     def test_engine_should_be_serviced(self):
         last_service_date = datetime.today().date()
